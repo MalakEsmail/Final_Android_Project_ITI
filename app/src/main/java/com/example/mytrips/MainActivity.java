@@ -20,12 +20,15 @@ public class MainActivity extends AppCompatActivity {
     EditText userName, pass;
     CheckBox checkpass;
 
+
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         userName = findViewById(R.id.etUserName);
         pass = findViewById(R.id.etemail);
+
         btnRegester = findViewById(R.id.btnRegester);
         btnSignForm = findViewById(R.id.btnRegestrationForm);
         checkpass = findViewById(R.id.checkpass2);
@@ -53,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 validate();
+
+
             }
         });
         btnRegester.setOnClickListener(new View.OnClickListener() {
