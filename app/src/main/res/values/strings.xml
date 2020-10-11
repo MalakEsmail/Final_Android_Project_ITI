@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">MyTrips</string>
+    <string name="signIn">Already have an account?</string>
+    <string name="etName">Name</string>
+    <string name="etPass">Password</string>
+    <string name="ShowPass">show password</string>
+    <string name="btnLogIn">Sign-in</string>
+    <string name="txt">--------------- Create new account ---------------</string>
+    <string name="btnCreateAccount">Create Account</string>
+    <string name="etEmail">Your email address</string>
+    <string name="etPassReg">Create a password</string>
+    <string name="RegistrationTxt">Create new account</string>
+    <string name="EmailSign">Email</string>
 </resources>
