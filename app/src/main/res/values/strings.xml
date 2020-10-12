@@ -20,4 +20,21 @@
     <string name="history">History</string>
     <string name="sync">Sync</string>
     <string name="logout">Logout</string>
+
+    <string name="tvNewTrip">Add new trip</string>
+    <string name="etTripName">Trip name</string>
+    <string name="startPoint">start point</string>
+    <string name="endPoint">end point</string>
+    <string name="tvDetails">Start Details</string>
+    <string name="btnAdd">Add Trip</string>
+    <string-array name="repetitions">
+        <item>No Repeat</item>
+        <item>Repeat Daily</item>
+        <item>Repeat Weekly</item>
+        <item>Repeat Monthly</item>
+    </string-array>
+    <string-array name="tripType">
+        <item>one Way Trip</item>
+        <item>Round Trip</item>
+    </string-array>
 </resources>
