@@ -2,7 +2,6 @@ package com.example.mytrips;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -86,6 +85,7 @@ public class AddFragment extends Fragment {
                 timePickerDialog.show();
             }
         });
+
         return view;
     }
 

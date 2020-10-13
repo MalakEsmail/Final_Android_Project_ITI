@@ -42,7 +42,7 @@
             android:layout_marginEnd="20dp"
             android:ems="10"
             android:hint="@string/etTripName"
-            android:inputType="textPersonName"
+            android:inputType="textPersonName|textCapSentences"
             android:padding="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -189,12 +189,13 @@
             android:layout_marginRight="8dp"
             android:ems="10"
             android:hint="@string/startPoint"
-            android:inputType="textPersonName"
+            android:inputType="textPersonName|textCapSentences"
             android:padding="15dp"
             app:layout_constraintBottom_toTopOf="@+id/etEndPoint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etTripName" />
+            app:layout_constraintTop_toBottomOf="@+id/etTripName"
+            android:layout_marginLeft="20dp" />
 
         <EditText
             android:id="@+id/etEndPoint"
@@ -206,12 +207,13 @@
             android:layout_marginRight="8dp"
             android:ems="10"
             android:hint="@string/endPoint"
-            android:inputType="textPersonName"
+            android:inputType="textPersonName|textCapSentences"
             android:padding="15dp"
             app:layout_constraintBottom_toTopOf="@+id/tvDetails"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etStartPoint" />
+            app:layout_constraintTop_toBottomOf="@+id/etStartPoint"
+            android:layout_marginLeft="20dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
