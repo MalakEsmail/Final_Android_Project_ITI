@@ -64,7 +64,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HistoryFragment()).commit();
                 break;
             case R.id.nav_sync:
-                Toast.makeText(HomeActivity.this, "Sync", Toast.LENGTH_SHORT).show();
+                // testing Reminder Dialog
+                CustomDialogFragment customDialogFragment = new CustomDialogFragment("work", "after exam ", "giza", "mansoura");
+                customDialogFragment.show(getSupportFragmentManager(), "CUSTOM");
+
+
+                //Toast.makeText(HomeActivity.this, "Sync", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_logout:
                 Toast.makeText(HomeActivity.this, "Log Out", Toast.LENGTH_SHORT).show();

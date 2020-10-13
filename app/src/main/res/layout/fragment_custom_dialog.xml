@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CustomDialogFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/trip_name_tv_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:text="trip_name" />
+
+            <TextView
+                android:id="@+id/trip_notes_tv_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+
+                android:text="trip_notes" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/start_button_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="start" />
+
+            <Button
+                android:id="@+id/later_button_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="later" />
+
+            <Button
+                android:id="@+id/cancel_button_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="close" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>
