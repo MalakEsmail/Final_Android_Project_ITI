@@ -2,6 +2,7 @@ package com.example.mytrips;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,11 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.Calendar;
 
 
@@ -29,6 +36,8 @@ public class AddFragment extends Fragment {
     Spinner repetitionSpinner, tripTypeSpinner;
     Button btnCalendar, btnAlarm, btnAdd;
     TextView tvCalendar, tvAlarm;
+    TripInfo tripInfo;
+    DatabaseReference myRef;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,7 +54,8 @@ public class AddFragment extends Fragment {
         tvCalendar = view.findViewById(R.id.tvCalendar);
         tvAlarm = view.findViewById(R.id.tvAlarm);
 
-
+        tripInfo=new TripInfo();
+        myRef= FirebaseDatabase.getInstance().getReference().child("TripInfo");
 
         //Calendar btn
         Calendar calendar = Calendar.getInstance();
@@ -86,7 +96,50 @@ public class AddFragment extends Fragment {
             }
         });
 
+        //btnAdd
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(validate()==true){
+                tripInfo.setName(etTripName.getText().toString().trim());
+                tripInfo.setStartPoint(etStartPoint.getText().toString().trim());
+                tripInfo.setEndPoint(etEndPoint.getText().toString().trim());
+                tripInfo.setDate(tvCalendar.getText().toString().trim());
+                tripInfo.setTime(tvAlarm.getText().toString().trim());
+                tripInfo.setTripType(tripTypeSpinner.getSelectedItem().toString().trim());
+                tripInfo.setRepetition(repetitionSpinner.getSelectedItem().toString().trim());
+                myRef.child(etTripName.getText().toString()).setValue(tripInfo).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                       Toast.makeText(getActivity(),"Trip Added Successfully", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getActivity(), HomeActivity.class));
+                    }
+                })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getActivity(),"Try Again", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }else{
+                    Toast.makeText(getActivity(),"All Fields are Required", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
         return view;
+    }
+    public boolean validate(){
+        boolean valid=true;
+        if (TextUtils.isEmpty(etTripName.getText().toString())
+                ||TextUtils.isEmpty(etStartPoint.getText().toString())
+                ||TextUtils.isEmpty(etEndPoint.getText().toString())
+                ||TextUtils.isEmpty(tvAlarm.getText().toString())
+                ||TextUtils.isEmpty(tvCalendar.getText().toString())){
+            valid=false;
+        }
+        return valid;
     }
 
 }
