@@ -38,4 +38,12 @@
         <item>one Way Trip</item>
         <item>Round Trip</item>
     </string-array>
+    <string name="tvName">Trip Name</string>
+    <string name="etStartPoint">StartPoint</string>
+    <string name="etEndPoint">End Point</string>
+    <string name="tvDate">Date: </string>
+    <string name="tvTime">Time: </string>
+    <string name="btnEdit">Save</string>
+    <string name="tvNotes">Notes</string>
+    <string name="etAddNotes">Add Notes</string>
 </resources>

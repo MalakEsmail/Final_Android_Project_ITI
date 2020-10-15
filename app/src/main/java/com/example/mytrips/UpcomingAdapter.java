@@ -11,14 +11,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHolder> {
     UpcomingData[] upcomingData;
 
     public UpcomingAdapter(UpcomingData[] upcomingData) {
-        this.upcomingData = upcomingData;
+         this.upcomingData = upcomingData;
     }
 
     @NonNull
@@ -26,7 +29,6 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.upcoming_row, parent, false);
-
         return new ViewHolder(view);
     }
 
