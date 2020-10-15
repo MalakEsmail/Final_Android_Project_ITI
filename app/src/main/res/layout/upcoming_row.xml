@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:elevation="4dp"
@@ -51,6 +52,20 @@
                 android:layout_toRightOf="@+id/upcoming_name"
                 android:text="Upcoming"
                 android:textSize="20dp" />
+
+            <ImageButton
+                android:id="@+id/trip_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@color/white"
+                app:srcCompat="@drawable/ic_trip_menu"
+                tools:ignore="VectorDrawableCompat" />
         </RelativeLayout>
 
         <LinearLayout
@@ -76,6 +91,34 @@
                 android:text="Kafr Al Sheikh"
                 android:textSize="20dp" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="bottom"
+                android:background="@color/blue2"
+                android:text="@string/start" />
+
+            <ImageButton
+                android:id="@+id/imageButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="bottom"
+                app:srcCompat="@drawable/ic_note_add"
+                tools:ignore="VectorDrawableCompat" />
+
+        </LinearLayout>
+
 
 
     </LinearLayout>

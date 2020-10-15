@@ -9,6 +9,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/upcoming_recyclerview"
         android:layout_margin="2dp"
+        android:background="@color/lightGray"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
