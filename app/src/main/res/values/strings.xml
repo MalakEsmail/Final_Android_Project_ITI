@@ -46,4 +46,5 @@
     <string name="btnEdit">Save</string>
     <string name="tvNotes">Notes</string>
     <string name="etAddNotes">Add Notes</string>
+    <string name="btnSave">Save</string>
 </resources>

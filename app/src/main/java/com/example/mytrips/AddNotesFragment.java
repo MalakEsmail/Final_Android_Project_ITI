@@ -24,7 +24,7 @@ public class AddNotesFragment extends Fragment {
     EditText etNewNote;
     ListView listView;
     TextView tvNote;
-    Button btnAddNote;
+    Button btnAddNote,btnSave;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -34,14 +34,8 @@ public class AddNotesFragment extends Fragment {
         listView=view.findViewById(R.id.list);
         listView.setAdapter(arrayAdapter);
         tvNote=view.findViewById(R.id.tvNote);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView textView=(TextView)view;
-                textView.setPaintFlags(textView.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
-            }
-        });
         etNewNote=view.findViewById(R.id.etNewNote);
+        btnSave=view.findViewById(R.id.btnSave);
         btnAddNote=view.findViewById(R.id.btnAddNote);
         btnAddNote.setOnClickListener(new View.OnClickListener() {
             @Override
