@@ -39,7 +39,7 @@ public class HistoryFragment extends Fragment {
                 new HistoryData("Collage","Done","15-10-2020","4:00","Alexandria","KafrAlshiekh"),
                 new HistoryData("Collage","Done","15-10-2020","4:00","Alexandria","KafrAlshiekh"),
         };
-        HistoryAdapter historyAdapter =new HistoryAdapter(historyData);
+        HistoryAdapter historyAdapter =new HistoryAdapter(historyData ,getContext());
         recyclerView.setAdapter(historyAdapter);
         return view;
     }

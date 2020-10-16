@@ -75,7 +75,8 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
 
                     FragmentManager manager =((AppCompatActivity)context).getSupportFragmentManager();
                     ShowNotesDialog showNotesDialog = new ShowNotesDialog();
-                    showNotesDialog.show(manager ,null);
+                    showNotesDialog.show(manager,null);
+
                 }
             });
             startTrip.setOnClickListener(new View.OnClickListener() {
@@ -108,9 +109,11 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
             switch (item.getItemId()) {
 
                 case R.id.notes:
+                    ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddNotesFragment()).commit();
                     Toast.makeText(itemView.getContext(), "notes", Toast.LENGTH_LONG).show();
                     break;
                 case R.id.edit_trip:
+                    ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new EditFragment()).commit();
                     Toast.makeText(itemView.getContext(), "edit", Toast.LENGTH_LONG).show();
                     break;
                 case R.id.delete_trip:
