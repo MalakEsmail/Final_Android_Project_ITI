@@ -46,7 +46,7 @@ public class UpcomingFragment extends Fragment {
                 new UpcomingData("25-6-2030","23:22","Collage","Upcoming","Alex","Cairo"),
                 new UpcomingData("25-6-2030","23:22","Collage","Upcoming","Alex","Cairo"),
         };
-        UpcomingAdapter upcomingAdapter =new UpcomingAdapter(upcomingData);
+        UpcomingAdapter upcomingAdapter =new UpcomingAdapter(upcomingData,getContext());
         recyclerView.setAdapter(upcomingAdapter);
         return view;
     }
