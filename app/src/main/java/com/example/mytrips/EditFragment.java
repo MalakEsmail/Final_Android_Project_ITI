@@ -9,20 +9,35 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class EditFragment extends Fragment {
     EditText etTripName,etStartPoint,etEndPoint;
     Spinner repetitionSpinner,tripTypeSpinner;
     Button btnSave;
+    List<String> notesList;
+    ArrayAdapter<String> arrayAdapter;
+    ListView listView;
     TextView tvDate,tvTime;
+    DatabaseReference ref;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -34,6 +49,8 @@ public class EditFragment extends Fragment {
         tripTypeSpinner=view.findViewById(R.id.tripTypeSpinner);
         tvDate=view.findViewById(R.id.tvDate);
         tvTime=view.findViewById(R.id.tvTime);
+        listView=view.findViewById(R.id.list);
+
 
 
         //Calendar btn

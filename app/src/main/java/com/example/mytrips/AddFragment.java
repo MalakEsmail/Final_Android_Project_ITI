@@ -55,7 +55,6 @@ public class AddFragment extends Fragment {
     ArrayAdapter<String> arrayAdapter;
     EditText etNewNote;
     ListView listView;
-    TextView tvNote;
     Button btnNewNote;
 
     @Override
@@ -117,15 +116,17 @@ public class AddFragment extends Fragment {
         arrayAdapter=new ArrayAdapter<>(getActivity(),R.layout.notes_list,todoList);
         listView=view.findViewById(R.id.list);
         listView.setAdapter(arrayAdapter);
-        tvNote=view.findViewById(R.id.tvNote);
         etNewNote=view.findViewById(R.id.etNewNote);
         btnNewNote=view.findViewById(R.id.btnNewNote);
         btnNewNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(TextUtils.isEmpty(etNewNote.getText().toString())){
+                    Toast.makeText(getActivity(),"This is empty note..Try Again!!", Toast.LENGTH_SHORT).show();
+                }else{
                 todoList.add(etNewNote.getText().toString());
                 arrayAdapter.notifyDataSetChanged();
-                etNewNote.setText("");
+                etNewNote.setText("");}
             }
         });
 
