@@ -1,9 +1,15 @@
-package com.example.mytrips;
+package com.example.mytrips.reminder;
 
+import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,25 +19,28 @@ import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 
+import com.example.mytrips.R;
+import com.example.mytrips.reminder.NotificationBroadCast;
 
 public class CustomDialogFragment extends DialogFragment {
-
     private static final String TAG = "CUSTOM";
 
-    TextView name, notes;
+    TextView name;
     Button start, cancel, later;
-    String tripName, tripNotes, startPoint, endPoint;
+    String tripName,  startPoint, endPoint,tripId;
+    MediaPlayer mediaPlayer;
+    NotificationManager notificationManager;
 
 
     public CustomDialogFragment() {
         // Required empty public constructor
     }
 
-    public CustomDialogFragment(String tripName, String tripNotes, String startPoint, String endPoint) {
+    public CustomDialogFragment(String tripIdString , String tripName, String startPoint, String endPoint) {
         this.tripName = tripName;
-        this.tripNotes = tripNotes;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
+        this.tripId = tripId;
     }
 
     @Override
@@ -45,36 +54,58 @@ public class CustomDialogFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_custom_dialog, container, false);
+        mediaPlayer = MediaPlayer.create(getContext(), Settings.System.DEFAULT_RINGTONE_URI);
+
+        notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(220);
+
+
+        mediaPlayer.start();
+        createNotificationChannel();
         name = view.findViewById(R.id.trip_name_tv_id);
-        notes = view.findViewById(R.id.trip_notes_tv_id);
         start = view.findViewById(R.id.start_button_id);
         cancel = view.findViewById(R.id.cancel_button_id);
         later = view.findViewById(R.id.later_button_id);
 
         name.setText(tripName);
-        notes.setText(tripNotes);
 
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 displayTrack(startPoint, endPoint);
-                getDialog().dismiss();
+                getDialog().cancel();
+                getActivity().finish();
+
+                mediaPlayer.stop();
+
             }
         });
         later.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo create notification that can restart dialog from again
+
+                Intent intent = new Intent(getContext(), NotificationBroadCast.class);
+                getActivity().sendBroadcast(intent);
+
                 Toast.makeText(getContext(), "later Clicked", Toast.LENGTH_SHORT).show();
-                getDialog().dismiss();
+                getDialog().cancel();
+                getActivity().finish();
+                mediaPlayer.stop();
+
             }
         });
+
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //todo change trip status to canceled
                 Toast.makeText(getContext(), "cancel Clicked", Toast.LENGTH_SHORT).show();
-                getDialog().dismiss();
+                getDialog().cancel();
+                getActivity().finish();
+
+                mediaPlayer.stop();
+
+
             }
         });
 
@@ -93,6 +124,22 @@ public class CustomDialogFragment extends DialogFragment {
             Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.apps.maps");
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        }
+    }
+
+    private void createNotificationChannel() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+
+            CharSequence sequence = "ReminderChannel";
+            String description = "Channel For Reminder";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+
+            NotificationChannel channel = new NotificationChannel("notify", sequence, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
 
         }
     }

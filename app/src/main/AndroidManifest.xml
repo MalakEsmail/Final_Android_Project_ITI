@@ -9,7 +9,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeActivity"
+        <!--        <activity-->
+<!--            android:name=".reminder.Dialog"-->
+<!--            android:label="@string/title_activity_alert_dialog"-->
+<!--            android:launchMode="singleInstance"-->
+<!--            android:theme="@android:style/Theme.Translucent" />-->
+        <activity android:theme="@android:style/Theme.Translucent" android:label="@string/title_activity_alert_dialog" android:name=".reminder.Dialog" android:launchMode="singleInstance"/>
+
+        <receiver
+            android:name=".reminder.NotificationBroadCast"
+            android:enabled="true"
+            android:exported="true" />
+        <receiver
+            android:name=".reminder.ReminderBroadCast"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Registration"

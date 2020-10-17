@@ -28,6 +28,7 @@
     <string name="tvDetails">Start Details</string>
     <string name="btnAdd">Add Trip</string>
     <string name="start">Start</string>
+    <string name="title_activity_alert_dialog">dialog</string>
     <string-array name="repetitions">
         <item>No Repeat</item>
         <item>Repeat Daily</item>
