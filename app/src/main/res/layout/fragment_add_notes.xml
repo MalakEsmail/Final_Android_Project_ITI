@@ -49,10 +49,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="30dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/btn_blue"
-            tools:text="@string/btnSave" />
+            android:text="@string/btnSave"
+            android:background="@drawable/btn_blue"/>
+
     </RelativeLayout>
 </FrameLayout>
