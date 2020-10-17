@@ -48,4 +48,5 @@
     <string name="tvNotes">Notes</string>
     <string name="etAddNotes">Add Notes</string>
     <string name="btnSave">Save</string>
+    <string name="title_activity_alert_dialog">dialog</string>
 </resources>
