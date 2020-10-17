@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,33 +113,34 @@ public class AddFragment extends Fragment {
         });
 
         //notes
-        todoList=new ArrayList<>();
-        arrayAdapter=new ArrayAdapter<>(getActivity(),R.layout.notes_list,todoList);
-        listView=view.findViewById(R.id.list);
+        todoList = new ArrayList<>();
+        arrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.notes_list, todoList);
+        listView = view.findViewById(R.id.list);
         listView.setAdapter(arrayAdapter);
-        etNewNote=view.findViewById(R.id.etNewNote);
-        btnNewNote=view.findViewById(R.id.btnNewNote);
+        etNewNote = view.findViewById(R.id.etNewNote);
+        btnNewNote = view.findViewById(R.id.btnNewNote);
         btnNewNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(TextUtils.isEmpty(etNewNote.getText().toString())){
-                    Toast.makeText(getActivity(),"This is empty note..Try Again!!", Toast.LENGTH_SHORT).show();
-                }else{
-                todoList.add(etNewNote.getText().toString());
-                arrayAdapter.notifyDataSetChanged();
-                etNewNote.setText("");}
+                if (TextUtils.isEmpty(etNewNote.getText().toString())) {
+                    Toast.makeText(getActivity(), "This is empty note..Try Again!!", Toast.LENGTH_SHORT).show();
+                } else {
+                    todoList.add(etNewNote.getText().toString());
+                    arrayAdapter.notifyDataSetChanged();
+                    etNewNote.setText("");
+                }
             }
         });
 
         //btnAdd
-        tripInfo=new TripInfo();
-        id=0;
-        myRef= FirebaseDatabase.getInstance().getReference().child("TripInfo");
+        tripInfo = new TripInfo();
+        id = 0;
+        myRef = FirebaseDatabase.getInstance().getReference().child("TripInfo");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    id=(snapshot.getChildrenCount());
+                if (snapshot.exists()) {
+                    id = (snapshot.getChildrenCount());
                 }
             }
 
@@ -150,8 +152,9 @@ public class AddFragment extends Fragment {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validate()==true){
-                    String uId= FirebaseAuth.getInstance().getCurrentUser().getUid();
+                if (validate() == true) {
+                    String uId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    String tripId = String.valueOf(id + 1 + id +id);
                     tripInfo.setName(etTripName.getText().toString().trim());
                     tripInfo.setStartPoint(etStartPoint.getText().toString().trim());
                     tripInfo.setEndPoint(etEndPoint.getText().toString().trim());
@@ -162,37 +165,40 @@ public class AddFragment extends Fragment {
                     tripInfo.setStatus("Upcoming");
                     tripInfo.setNotes(todoList);
                     tripInfo.setuId(uId);
-                    myRef.child(String.valueOf(id+1)).setValue(tripInfo).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    tripInfo.setTripId(tripId);
+
+
+                    myRef.child(tripId).setValue(tripInfo).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                           Toast.makeText(getActivity(),"Trip Added Successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Trip Added Successfully", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getActivity(), HomeActivity.class));
                         }
                     })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(getActivity(),"Try Again", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Try Again", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                }else{
-                        Toast.makeText(getActivity(),"All Fields are Required", Toast.LENGTH_SHORT).show();
-                    }
+                } else {
+                    Toast.makeText(getActivity(), "All Fields are Required", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
 
-
         return view;
     }
-    public boolean validate(){
-        boolean valid=true;
+
+    public boolean validate() {
+        boolean valid = true;
         if (TextUtils.isEmpty(etTripName.getText().toString())
-                ||TextUtils.isEmpty(etStartPoint.getText().toString())
-                ||TextUtils.isEmpty(etEndPoint.getText().toString())
-                ||TextUtils.isEmpty(tvAlarm.getText().toString())
-                ||TextUtils.isEmpty(tvCalendar.getText().toString())){
-            valid=false;
+                || TextUtils.isEmpty(etStartPoint.getText().toString())
+                || TextUtils.isEmpty(etEndPoint.getText().toString())
+                || TextUtils.isEmpty(tvAlarm.getText().toString())
+                || TextUtils.isEmpty(tvCalendar.getText().toString())) {
+            valid = false;
         }
         return valid;
     }

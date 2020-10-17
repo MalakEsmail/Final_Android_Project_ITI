@@ -3,13 +3,20 @@ package com.example.mytrips;
 import java.util.List;
 
 public class TripInfo {
-    private String name,startPoint,endPoint,time,date,tripType,repetition,status,uId;
+    private String name,startPoint,endPoint,time,date,tripType,repetition,status,uId,tripId;
     private List notes;
 
     public TripInfo() {
 
     }
 
+    public String getTripId() {
+        return tripId;
+    }
+
+    public void setTripId(String tripId) {
+        this.tripId = tripId;
+    }
 
     public String getName() {
         return name;

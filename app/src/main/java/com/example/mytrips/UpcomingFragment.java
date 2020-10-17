@@ -45,7 +45,7 @@ public class UpcomingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_upcoming, container, false);
-         recyclerView = view.findViewById(R.id.upcoming_recyclerview);
+        recyclerView = view.findViewById(R.id.upcoming_recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         listOfUpcomingData = new ArrayList<>();
@@ -60,9 +60,9 @@ public class UpcomingFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot data : snapshot.getChildren()) {
-                         oneUpcomingData = data.getValue(UpcomingData.class);
-                         listOfUpcomingData.add(oneUpcomingData);
-                     }
+                        oneUpcomingData = data.getValue(UpcomingData.class);
+                        listOfUpcomingData.add(oneUpcomingData);
+                    }
                     upcomingAdapter = new UpcomingAdapter(listOfUpcomingData, getContext());
                     recyclerView.setAdapter(upcomingAdapter);
 
@@ -75,7 +75,7 @@ public class UpcomingFragment extends Fragment {
             }
         });
 
-     return view;
+        return view;
     }
 
 }
