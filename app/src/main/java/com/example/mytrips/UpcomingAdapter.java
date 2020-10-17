@@ -1,11 +1,9 @@
 package com.example.mytrips;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +14,20 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AlertDialogLayout;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHolder> {
-    UpcomingData[] upcomingData;
+   // UpcomingData[] upcomingData;
+    ArrayList<UpcomingData> upcomingData;
     Context context;
-    public UpcomingAdapter(UpcomingData[] upcomingData,Context context) {
-        this.upcomingData = upcomingData;
+    public UpcomingAdapter(ArrayList<UpcomingData> upcomingData, Context context) {
+      //  this.upcomingData = upcomingData;
+        this.upcomingData=upcomingData;
         this.context=context;
     }
 
@@ -40,18 +42,18 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        holder.dateTxt.setText(upcomingData[position].getDate());
-        holder.timeTxt.setText(upcomingData[position].getTime());
-        holder.tripNameTxt.setText(upcomingData[position].getTripName());
-        holder.stateTxt.setText(upcomingData[position].getState());
-        holder.startTxt.setText(upcomingData[position].getStartPoint());
-        holder.endTxt.setText(upcomingData[position].getEndPoint());
+        holder.dateTxt.setText(upcomingData.get(position).getDate());
+        holder.timeTxt.setText(upcomingData.get(position).getTime());
+        holder.tripNameTxt.setText(upcomingData.get(position).getName());
+        holder.stateTxt.setText(upcomingData.get(position).getStatus());
+        holder.startTxt.setText(upcomingData.get(position).getStartPoint());
+        holder.endTxt.setText(upcomingData.get(position).getEndPoint());
 
     }
 
     @Override
     public int getItemCount() {
-        return upcomingData.length;
+        return upcomingData.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements  PopupMenu.OnMenuItemClickListener {

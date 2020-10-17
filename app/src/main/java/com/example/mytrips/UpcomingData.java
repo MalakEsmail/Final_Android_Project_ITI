@@ -1,38 +1,29 @@
 package com.example.mytrips;
 
 public class UpcomingData {
- private String date,time,tripName,state,startPoint,endPoint;
+    private String name,startPoint,endPoint,time,date,tripType,repetition,status,uId;
 
-    public String getDate() {
-        return date;
+    public UpcomingData() {
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
+    public UpcomingData(String name, String startPoint, String endPoint, String time, String date, String tripType, String repetition, String status, String uId) {
+        this.name = name;
+        this.startPoint = startPoint;
+        this.endPoint = endPoint;
         this.time = time;
+        this.date = date;
+        this.tripType = tripType;
+        this.repetition = repetition;
+        this.status = status;
+        this.uId = uId;
     }
 
-    public String getTripName() {
-        return tripName;
+    public String getName() {
+        return name;
     }
 
-    public void setTripName(String tripName) {
-        this.tripName = tripName;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getStartPoint() {
@@ -51,12 +42,52 @@ public class UpcomingData {
         this.endPoint = endPoint;
     }
 
-    public UpcomingData(String date, String time, String tripName, String state, String startPoint, String endPoint) {
-        this.date = date;
-        this.time = time;
-        this.tripName = tripName;
-        this.state = state;
-        this.startPoint = startPoint;
-        this.endPoint = endPoint;
+    public String getTime() {
+        return time;
     }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTripType() {
+        return tripType;
+    }
+
+    public void setTripType(String tripType) {
+        this.tripType = tripType;
+    }
+
+    public String getRepetition() {
+        return repetition;
+    }
+
+    public void setRepetition(String repetition) {
+        this.repetition = repetition;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getuId() {
+        return uId;
+    }
+
+    public void setuId(String uId) {
+        this.uId = uId;
+    }
+
 }

@@ -7,7 +7,9 @@ public class TripInfo {
     private List notes;
 
     public TripInfo() {
+
     }
+
 
     public String getName() {
         return name;
