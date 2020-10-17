@@ -1,39 +1,36 @@
 package com.example.mytrips;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.mytrips.reminder.ReminderBroadCast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
 
-public class Registration extends AppCompatActivity {
+public class RegistrationFragment extends Fragment {
 
     Button btnRegistrationForm;
     CheckBox checkPass2;
@@ -42,15 +39,14 @@ public class Registration extends AppCompatActivity {
     DatabaseReference reference;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration);
-
-        etPassword = findViewById(R.id.etPassword);
-        checkPass2 = findViewById(R.id.checkpass2);
-        etUser = findViewById(R.id.etUserName);
-        etEmail = findViewById(R.id.etemail);
-        btnRegistrationForm = findViewById(R.id.btnRegestrationForm);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view=inflater.inflate(R.layout.fragment_registration, container, false);
+        etPassword = view.findViewById(R.id.etPassword);
+        checkPass2 = view.findViewById(R.id.checkpass2);
+        etUser =view.findViewById(R.id.etUserName);
+        etEmail = view.findViewById(R.id.etemail);
+        btnRegistrationForm = view.findViewById(R.id.btnRegestrationForm);
         auth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference();
 
@@ -78,6 +74,7 @@ public class Registration extends AppCompatActivity {
                 validate();
             }
         });
+        return view;
 
     }
 
@@ -86,16 +83,18 @@ public class Registration extends AppCompatActivity {
 
         if (TextUtils.isEmpty(etUser.getText().toString()) || TextUtils.isEmpty(etEmail.getText().toString()) || TextUtils.isEmpty(etPassword.getText().toString())) {
 
-            Toast.makeText(this, "All Fields are required !!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "All Fields are required !!", Toast.LENGTH_SHORT).show();
 
         } else {
             if(etPassword.getText().toString().length() <6){
-                Toast.makeText(this, "password Should be 6+ !! ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "password Should be 6+ !! ", Toast.LENGTH_SHORT).show();
             }else{
                 createUserAccount();
 
             }
+
         }
+
 
     }
 
@@ -118,7 +117,7 @@ public class Registration extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Registration.this, "Try Again !!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Try Again !!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -140,12 +139,12 @@ public class Registration extends AppCompatActivity {
                     etEmail.setText("");
                     etUser.setText("");
                     etPassword.setText("");
-                    Toast.makeText(Registration.this, "Account Created Successfully ..", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                    finish();
+                    Toast.makeText(getActivity(), "Account Created Successfully ..", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getActivity(), HomeActivity.class));
+                    getActivity().finish();
 
                 } else {
-                    Toast.makeText(Registration.this, "Try again !! ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Try again !! ", Toast.LENGTH_SHORT).show();
 
                 }
             }

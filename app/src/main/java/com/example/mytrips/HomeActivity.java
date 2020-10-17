@@ -33,7 +33,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         floating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddFragment()).addToBackStack("").commit();
             }
         });
 

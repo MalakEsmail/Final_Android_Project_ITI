@@ -111,11 +111,11 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
             switch (item.getItemId()) {
 
                 case R.id.notes:
-                    ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddNotesFragment()).commit();
+                    ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddNotesFragment()).addToBackStack("").commit();
                     Toast.makeText(itemView.getContext(), "notes", Toast.LENGTH_LONG).show();
                     break;
                 case R.id.edit_trip:
-                    ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new EditFragment()).commit();
+                    ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new EditFragment()).addToBackStack("").commit();
                     Toast.makeText(itemView.getContext(), "edit", Toast.LENGTH_LONG).show();
                     break;
                 case R.id.delete_trip:
