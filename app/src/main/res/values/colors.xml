@@ -10,5 +10,6 @@
     <color name="lightBlue">#CFE9F1</color>
     <color name="blue2">#64b5f6</color>
     <color name="txtColor">#35609E</color>
+    <color name="textColor">#232020</color>
 
 </resources>

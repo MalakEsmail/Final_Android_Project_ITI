@@ -1,7 +1,10 @@
 package com.example.mytrips;
 
+import java.util.List;
+
 public class TripInfo {
-    private String name,startPoint,endPoint,time,date,tripType,repetition;
+    private String name,startPoint,endPoint,time,date,tripType,repetition,status,uId;
+    private List notes;
 
     public TripInfo() {
     }
@@ -60,5 +63,29 @@ public class TripInfo {
 
     public void setRepetition(String repetition) {
         this.repetition = repetition;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public List getNotes() {
+        return notes;
+    }
+
+    public void setNotes(List notes) {
+        this.notes = notes;
+    }
+
+    public String getuId() {
+        return uId;
+    }
+
+    public void setuId(String uId) {
+        this.uId = uId;
     }
 }

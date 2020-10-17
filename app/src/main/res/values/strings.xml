@@ -28,7 +28,7 @@
     <string name="tvDetails">Start Details</string>
     <string name="btnAdd">Add Trip</string>
     <string name="start">Start</string>
-    <string name="title_activity_alert_dialog">dialog</string>
+    <string name="cancel">Cancel</string>
     <string-array name="repetitions">
         <item>No Repeat</item>
         <item>Repeat Daily</item>
@@ -39,4 +39,13 @@
         <item>one Way Trip</item>
         <item>Round Trip</item>
     </string-array>
+    <string name="tvName">Trip Name</string>
+    <string name="etStartPoint">StartPoint</string>
+    <string name="etEndPoint">End Point</string>
+    <string name="tvDate">Date: </string>
+    <string name="tvTime">Time: </string>
+    <string name="btnEdit">Save</string>
+    <string name="tvNotes">Notes</string>
+    <string name="etAddNotes">Add Notes</string>
+    <string name="btnSave">Save</string>
 </resources>
