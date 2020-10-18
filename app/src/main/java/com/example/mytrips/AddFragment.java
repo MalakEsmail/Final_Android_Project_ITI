@@ -57,6 +57,7 @@ public class AddFragment extends Fragment {
     EditText etNewNote;
     ListView listView;
     Button btnNewNote;
+    long dateAndTimeInMillis;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -149,12 +150,16 @@ public class AddFragment extends Fragment {
 
             }
         });
+
+        //set date and time in millis
+        dateAndTimeInMillis = D2MS(month, day, year, hour, minute, 0);
+
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (validate() == true) {
                     String uId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    String tripId = String.valueOf(id + 1 + id +id);
+                    String tripId = String.valueOf(dateAndTimeInMillis).concat(uId);
                     tripInfo.setName(etTripName.getText().toString().trim());
                     tripInfo.setStartPoint(etStartPoint.getText().toString().trim());
                     tripInfo.setEndPoint(etEndPoint.getText().toString().trim());
@@ -166,12 +171,14 @@ public class AddFragment extends Fragment {
                     tripInfo.setNotes(todoList);
                     tripInfo.setuId(uId);
                     tripInfo.setTripId(tripId);
+                    tripInfo.setDateAndTimeInMillis(String.valueOf(dateAndTimeInMillis));
 
 
                     myRef.child(tripId).setValue(tripInfo).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(getActivity(), "Trip Added Successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Trip Added Successfully", Toast.LENGTH_SHORT).show();
+
                             startActivity(new Intent(getActivity(), HomeActivity.class));
                         }
                     })
@@ -201,6 +208,13 @@ public class AddFragment extends Fragment {
             valid = false;
         }
         return valid;
+    }
+
+    public long D2MS(int month, int day, int year, int hour, int minute, int seconds) {
+        Calendar c = Calendar.getInstance();
+        c.set(year, month, day, hour, minute, seconds);
+
+        return c.getTimeInMillis();
     }
 
 }

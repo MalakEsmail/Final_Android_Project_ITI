@@ -1,7 +1,11 @@
 package com.example.mytrips;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.example.mytrips.reminder.ReminderBroadCast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,6 +33,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.ALARM_SERVICE;
 
 
 public class UpcomingFragment extends Fragment {
@@ -54,14 +61,16 @@ public class UpcomingFragment extends Fragment {
         userTripQuery =
                 tripRef.orderByChild("uId").equalTo(uid);
 
-
         userTripQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot data : snapshot.getChildren()) {
                         oneUpcomingData = data.getValue(UpcomingData.class);
-                        listOfUpcomingData.add(oneUpcomingData);
+                        if((oneUpcomingData.getStatus()).equals("Upcoming") ){
+                            listOfUpcomingData.add(oneUpcomingData);
+
+                        }
                     }
                     upcomingAdapter = new UpcomingAdapter(listOfUpcomingData, getContext());
                     recyclerView.setAdapter(upcomingAdapter);
@@ -74,6 +83,12 @@ public class UpcomingFragment extends Fragment {
 
             }
         });
+
+//        //todo Reminder
+//        Intent intent = new Intent(context, ReminderBroadCast.class);
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+//        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+//        alarmManager.set(AlarmManager.RTC_WAKEUP, Long.valueOf(upcomingData.get(position).getDateAndTimeInMillis()), pendingIntent);
 
         return view;
     }

@@ -70,14 +70,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_sync:
 
-                // test Reminder
-                Intent intent = new Intent(HomeActivity.this, ReminderBroadCast.class);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(HomeActivity.this, 0, intent, 0);
-                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                long time = System.currentTimeMillis();
-                long tenSecondsImMillis = 1000 * 2;
-                alarmManager.set(AlarmManager.RTC_WAKEUP, time + tenSecondsImMillis, pendingIntent);
-                //Toast.makeText(HomeActivity.this, "Sync", Toast.LENGTH_SHORT).show();
+                 //Toast.makeText(HomeActivity.this, "Sync", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_logout:
                 Toast.makeText(HomeActivity.this, "Log Out", Toast.LENGTH_SHORT).show();

@@ -1,12 +1,13 @@
 package com.example.mytrips;
 
 public class UpcomingData {
-    private String name,startPoint,endPoint,time,date,tripType,repetition,status,uId;
+    private String name,startPoint,endPoint,time,date,tripType,repetition,status,uId,tripId,dateAndTimeInMillis;
 
     public UpcomingData() {
     }
 
-    public UpcomingData(String name, String startPoint, String endPoint, String time, String date, String tripType, String repetition, String status, String uId) {
+    public UpcomingData(String name, String startPoint, String endPoint, String time, String date, String tripType, String repetition,
+                        String status, String uId, String tripId, String dateAndTimeInMillis) {
         this.name = name;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
@@ -16,6 +17,24 @@ public class UpcomingData {
         this.repetition = repetition;
         this.status = status;
         this.uId = uId;
+        this.tripId = tripId;
+        this.dateAndTimeInMillis = dateAndTimeInMillis;
+    }
+
+    public String getTripId() {
+        return tripId;
+    }
+
+    public void setTripId(String tripId) {
+        this.tripId = tripId;
+    }
+
+    public String getDateAndTimeInMillis() {
+        return dateAndTimeInMillis;
+    }
+
+    public void setDateAndTimeInMillis(String dateAndTimeInMillis) {
+        this.dateAndTimeInMillis = dateAndTimeInMillis;
     }
 
     public String getName() {
