@@ -173,7 +173,6 @@ public class AddFragment extends Fragment {
                     tripInfo.setTripId(tripId);
                     tripInfo.setDateAndTimeInMillis(String.valueOf(dateAndTimeInMillis));
 
-
                     myRef.child(tripId).setValue(tripInfo).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {

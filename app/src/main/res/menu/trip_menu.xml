@@ -4,6 +4,9 @@
         android:id="@+id/notes"
         android:title="Notes" />
     <item
+        android:id="@+id/details_trip"
+        android:title="Details" />
+    <item
         android:id="@+id/edit_trip"
         android:title="Edit" />
     <item

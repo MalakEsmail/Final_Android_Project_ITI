@@ -82,9 +82,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
             showHistoryNotes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FragmentManager manager =((AppCompatActivity)context).getSupportFragmentManager();
-                    ShowNotesDialog showNotesDialog = new ShowNotesDialog();
-                    showNotesDialog.show(manager ,null);
+                    //FragmentManager manager =((AppCompatActivity)context).getSupportFragmentManager();
+                    //ShowNotesDialog showNotesDialog = new ShowNotesDialog();
+                    //showNotesDialog.show(manager ,null);
                 }
             });
             cancel.setOnClickListener(new View.OnClickListener() {

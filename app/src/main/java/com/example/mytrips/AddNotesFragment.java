@@ -17,7 +17,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,8 @@ public class AddNotesFragment extends Fragment {
     EditText etNewNote;
     ListView listView;
     Button btnAddNote,btnSave;
+    DatabaseReference myRef;
+    TripInfo tripInfo;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,6 +43,9 @@ public class AddNotesFragment extends Fragment {
         etNewNote=view.findViewById(R.id.etNewNote);
         btnSave=view.findViewById(R.id.btnSave);
         btnAddNote=view.findViewById(R.id.btnAddNote);
+        tripInfo=new TripInfo();
+        myRef= FirebaseDatabase.getInstance().getReference().child("TripInfo");
+
         btnAddNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,6 +58,7 @@ public class AddNotesFragment extends Fragment {
                 }
             }
         });
+
 
 
         return view;

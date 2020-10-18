@@ -105,4 +105,5 @@ public class TripInfo {
     public void setuId(String uId) {
         this.uId = uId;
     }
+
 }

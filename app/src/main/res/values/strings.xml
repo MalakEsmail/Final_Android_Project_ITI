@@ -49,4 +49,6 @@
     <string name="etAddNotes">Add Notes</string>
     <string name="btnSave">Save</string>
     <string name="title_activity_alert_dialog">dialog</string>
+    <string name="tvRepeate">Repeatition</string>
+    <string name="tvType">Trip Type</string>
 </resources>

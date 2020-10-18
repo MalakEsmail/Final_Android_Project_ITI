@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -29,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,14 +40,16 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHolder> {
     // UpcomingData[] upcomingData;
     ArrayList<UpcomingData> upcomingData;
     Context context;
-    DatabaseReference ref;
+    DatabaseReference ref,myRef;
     String tripId;
     String startTripId;
+    List<String>displayNotes;
 
     public UpcomingAdapter(ArrayList<UpcomingData> upcomingData, Context context) {
         //  this.upcomingData = upcomingData;
@@ -57,7 +61,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.upcoming_row, parent, false);
-
+         displayNotes=new ArrayList<>();
         return new ViewHolder(view);
     }
 
@@ -70,6 +74,16 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
         holder.stateTxt.setText(upcomingData.get(position).getStatus());
         holder.startTxt.setText(upcomingData.get(position).getStartPoint());
         holder.endTxt.setText(upcomingData.get(position).getEndPoint());
+        holder. showNotes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String tripId=upcomingData.get(position).getTripId();
+                FragmentManager manager = ((AppCompatActivity) context).getSupportFragmentManager();
+                ShowNotesDialog showNotesDialog = new ShowNotesDialog(tripId);
+                showNotesDialog.show(manager, null);
+
+            }
+        });
         holder.startTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,12 +119,50 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
                         switch (item.getItemId()) {
 
                             case R.id.notes:
-                                ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddNotesFragment()).addToBackStack("").commit();
-                                Toast.makeText(context, "notes", Toast.LENGTH_LONG).show();
+                                myRef=FirebaseDatabase.getInstance().getReference().child("TripInfo").child(upcomingData.get(position).getTripId()).child("notes");
+                                Bundle b=new Bundle();
+                                b.putString("TripId",upcomingData.get(position).getTripId());
+                                b.putString("Name",upcomingData.get(position).getName());
+                                b.putString("StartPoint",upcomingData.get(position).getStartPoint());
+                                b.putString("EndPoint",upcomingData.get(position).getEndPoint());
+                                b.putString("Date",upcomingData.get(position).getDate());
+                                b.putString("Time",upcomingData.get(position).getTime());
+                                b.putString("Repetition",upcomingData.get(position).getRepetition());
+                                b.putString("TripType",upcomingData.get(position).getTripType());
+
+                                AddNotesFragment addNotesFragment=new AddNotesFragment();
+                                addNotesFragment.setArguments(b);
+                                ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, addNotesFragment).addToBackStack("").commit();
+                                break;
+                            case R.id.details_trip:
+                                myRef=FirebaseDatabase.getInstance().getReference().child("TripInfo").child(upcomingData.get(position).getTripId()).child("notes");
+                                Bundle bundle2=new Bundle();
+                                bundle2.putString("TripId",upcomingData.get(position).getTripId());
+                                bundle2.putString("Name",upcomingData.get(position).getName());
+                                bundle2.putString("StartPoint",upcomingData.get(position).getStartPoint());
+                                bundle2.putString("EndPoint",upcomingData.get(position).getEndPoint());
+                                bundle2.putString("Date",upcomingData.get(position).getDate());
+                                bundle2.putString("Time",upcomingData.get(position).getTime());
+                                bundle2.putString("Repetition",upcomingData.get(position).getRepetition());
+                                bundle2.putString("TripType",upcomingData.get(position).getTripType());
+                                DetailsFragment detailsFragment=new DetailsFragment();
+                                detailsFragment.setArguments(bundle2);
+                                ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, detailsFragment).addToBackStack("").commit();
                                 break;
                             case R.id.edit_trip:
-                                ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new EditFragment()).addToBackStack("").commit();
-                                Toast.makeText(context, "edit", Toast.LENGTH_LONG).show();
+                                myRef=FirebaseDatabase.getInstance().getReference().child("TripInfo").child(upcomingData.get(position).getTripId()).child("notes");
+                                Bundle bundle=new Bundle();
+                                bundle.putString("TripId",upcomingData.get(position).getTripId());
+                                bundle.putString("Name",upcomingData.get(position).getName());
+                                bundle.putString("StartPoint",upcomingData.get(position).getStartPoint());
+                                bundle.putString("EndPoint",upcomingData.get(position).getEndPoint());
+                                bundle.putString("Date",upcomingData.get(position).getDate());
+                                bundle.putString("Time",upcomingData.get(position).getTime());
+                                bundle.putString("Repetition",upcomingData.get(position).getRepetition());
+                                bundle.putString("TripType",upcomingData.get(position).getTripType());
+                                EditFragment editFragment=new EditFragment();
+                                editFragment.setArguments(bundle);
+                                ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, editFragment).addToBackStack("").commit();
                                 break;
                             case R.id.delete_trip:
 
@@ -210,16 +262,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
             startTrip = itemView.findViewById(R.id.start_trip);
 
 
-            showNotes.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
 
-                    FragmentManager manager = ((AppCompatActivity) context).getSupportFragmentManager();
-                    ShowNotesDialog showNotesDialog = new ShowNotesDialog();
-                    showNotesDialog.show(manager, null);
-
-                }
-            });
 
         }
 
@@ -239,4 +282,5 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
 
         }
     }
+
 }
