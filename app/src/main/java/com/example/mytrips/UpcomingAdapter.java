@@ -61,7 +61,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.upcoming_row, parent, false);
-         displayNotes=new ArrayList<>();
+         displayNotes=new ArrayList<String>();
         return new ViewHolder(view);
     }
 
@@ -129,7 +129,6 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
                                 b.putString("Time",upcomingData.get(position).getTime());
                                 b.putString("Repetition",upcomingData.get(position).getRepetition());
                                 b.putString("TripType",upcomingData.get(position).getTripType());
-
                                 AddNotesFragment addNotesFragment=new AddNotesFragment();
                                 addNotesFragment.setArguments(b);
                                 ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, addNotesFragment).addToBackStack("").commit();

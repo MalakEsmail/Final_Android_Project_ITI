@@ -73,9 +73,7 @@ public class EditFragment extends Fragment {
         etEndPoint.setText(bundle.getString("EndPoint"));
         tvDate.setText(bundle.getString("Date"));
         tvTime.setText(bundle.getString("Time"));
-
-
-
+        tripInfo.setStatus("Upcoming");
         myRef=FirebaseDatabase.getInstance().getReference().child("TripInfo");
         notesList = new ArrayList<>();
         arrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.notes_list, notesList);
