@@ -17,10 +17,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.mytrips.R;
 import com.example.mytrips.reminder.NotificationBroadCast;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 public class CustomDialogFragment extends DialogFragment {
     private static final String TAG = "CUSTOM";
@@ -30,13 +37,14 @@ public class CustomDialogFragment extends DialogFragment {
     String tripName,  startPoint, endPoint,tripId;
     MediaPlayer mediaPlayer;
     NotificationManager notificationManager;
+    DatabaseReference ref;
 
 
     public CustomDialogFragment() {
         // Required empty public constructor
     }
 
-    public CustomDialogFragment(String tripIdString , String tripName, String startPoint, String endPoint) {
+    public CustomDialogFragment(String tripId , String tripName, String startPoint, String endPoint) {
         this.tripName = tripName;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
@@ -72,6 +80,20 @@ public class CustomDialogFragment extends DialogFragment {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                ref = FirebaseDatabase.getInstance().getReference().child("TripInfo");
+
+                HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put("status", "Done");
+                ref.child(tripId).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getContext(), "You Started your Trip", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                });
                 displayTrack(startPoint, endPoint);
                 getDialog().cancel();
                 getActivity().finish();
@@ -98,8 +120,19 @@ public class CustomDialogFragment extends DialogFragment {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo change trip status to canceled
-                Toast.makeText(getContext(), "cancel Clicked", Toast.LENGTH_SHORT).show();
+                ref = FirebaseDatabase.getInstance().getReference().child("TripInfo");
+
+                HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put("status", "Canceled");
+                ref.child(tripId).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getContext(), "You Trip is Canceled ..", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                });
                 getDialog().cancel();
                 getActivity().finish();
 

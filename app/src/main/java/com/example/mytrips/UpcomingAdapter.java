@@ -50,10 +50,10 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
     // UpcomingData[] upcomingData;
     ArrayList<UpcomingData> upcomingData;
     Context context;
-    DatabaseReference ref,myRef;
+    DatabaseReference ref, myRef;
     String tripId;
     String startTripId;
-    List<String>displayNotes;
+    List<String> displayNotes;
 
     public UpcomingAdapter(ArrayList<UpcomingData> upcomingData, Context context) {
         //  this.upcomingData = upcomingData;
@@ -65,7 +65,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.upcoming_row, parent, false);
-         displayNotes=new ArrayList<String>();
+        displayNotes = new ArrayList<String>();
         return new ViewHolder(view);
     }
 
@@ -75,26 +75,41 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
 
         //  if (upcomingData.get(position).getDateAndTimeInMillis() == String.valueOf(System.currentTimeMillis())) {
 
-        Intent intent = new Intent(context, ReminderBroadCast.class);
-       // intent.putExtra("start", upcomingData.get(0).getStartPoint());
-        Toast.makeText(context, ""+upcomingData.get(position).getDateAndTimeInMillis(), Toast.LENGTH_SHORT).show();
-
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, Long.valueOf(upcomingData.get(position).getDateAndTimeInMillis()), pendingIntent);
+        //  Intent intent = new Intent(context, ReminderBroadCast.class);
+        // intent.putExtra("start", upcomingData.get(0).getStartPoint());
+        // Toast.makeText(context, ""+upcomingData.get(position).getDateAndTimeInMillis(), Toast.LENGTH_SHORT).show();
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+//        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+//        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (60 * 1000)/*Long.valueOf(upcomingData.get(position).getDateAndTimeInMillis())*/, pendingIntent);
 
         //}
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ReminderBroadCast.class);
+                intent.setAction("com.example.mytrips");
+                intent.putExtra("name", upcomingData.get(position).getName());
+                intent.putExtra("start", upcomingData.get(position).getStartPoint());
+                intent.putExtra("end", upcomingData.get(position).getEndPoint());
+                intent.putExtra("tripId", upcomingData.get(position).getTripId());
+
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+
+                AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (5 * 1000)/*Long.valueOf(upcomingData.get(position).getDateAndTimeInMillis())*/, pendingIntent);
+
+            }
+        });
         holder.dateTxt.setText(upcomingData.get(position).getDate());
         holder.timeTxt.setText(upcomingData.get(position).getTime());
         holder.tripNameTxt.setText(upcomingData.get(position).getName());
         holder.stateTxt.setText(upcomingData.get(position).getStatus());
         holder.startTxt.setText(upcomingData.get(position).getStartPoint());
         holder.endTxt.setText(upcomingData.get(position).getEndPoint());
-        holder. showNotes.setOnClickListener(new View.OnClickListener() {
+        holder.showNotes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String tripId=upcomingData.get(position).getTripId();
+                String tripId = upcomingData.get(position).getTripId();
                 FragmentManager manager = ((AppCompatActivity) context).getSupportFragmentManager();
                 ShowNotesDialog showNotesDialog = new ShowNotesDialog(tripId);
                 showNotesDialog.show(manager, null);
@@ -136,48 +151,48 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
                         switch (item.getItemId()) {
 
                             case R.id.notes:
-                                myRef=FirebaseDatabase.getInstance().getReference().child("TripInfo").child(upcomingData.get(position).getTripId()).child("notes");
-                                Bundle b=new Bundle();
-                                b.putString("TripId",upcomingData.get(position).getTripId());
-                                b.putString("Name",upcomingData.get(position).getName());
-                                b.putString("StartPoint",upcomingData.get(position).getStartPoint());
-                                b.putString("EndPoint",upcomingData.get(position).getEndPoint());
-                                b.putString("Date",upcomingData.get(position).getDate());
-                                b.putString("Time",upcomingData.get(position).getTime());
-                                b.putString("Repetition",upcomingData.get(position).getRepetition());
-                                b.putString("TripType",upcomingData.get(position).getTripType());
-                                AddNotesFragment addNotesFragment=new AddNotesFragment();
+                                myRef = FirebaseDatabase.getInstance().getReference().child("TripInfo").child(upcomingData.get(position).getTripId()).child("notes");
+                                Bundle b = new Bundle();
+                                b.putString("TripId", upcomingData.get(position).getTripId());
+                                b.putString("Name", upcomingData.get(position).getName());
+                                b.putString("StartPoint", upcomingData.get(position).getStartPoint());
+                                b.putString("EndPoint", upcomingData.get(position).getEndPoint());
+                                b.putString("Date", upcomingData.get(position).getDate());
+                                b.putString("Time", upcomingData.get(position).getTime());
+                                b.putString("Repetition", upcomingData.get(position).getRepetition());
+                                b.putString("TripType", upcomingData.get(position).getTripType());
+                                AddNotesFragment addNotesFragment = new AddNotesFragment();
                                 addNotesFragment.setArguments(b);
                                 ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, addNotesFragment).addToBackStack("").commit();
                                 break;
                             case R.id.details_trip:
-                                myRef=FirebaseDatabase.getInstance().getReference().child("TripInfo").child(upcomingData.get(position).getTripId()).child("notes");
-                                Bundle bundle2=new Bundle();
-                                bundle2.putString("TripId",upcomingData.get(position).getTripId());
-                                bundle2.putString("Name",upcomingData.get(position).getName());
-                                bundle2.putString("StartPoint",upcomingData.get(position).getStartPoint());
-                                bundle2.putString("EndPoint",upcomingData.get(position).getEndPoint());
-                                bundle2.putString("Date",upcomingData.get(position).getDate());
-                                bundle2.putString("Time",upcomingData.get(position).getTime());
-                                bundle2.putString("Repetition",upcomingData.get(position).getRepetition());
-                                bundle2.putString("TripType",upcomingData.get(position).getTripType());
+                                myRef = FirebaseDatabase.getInstance().getReference().child("TripInfo").child(upcomingData.get(position).getTripId()).child("notes");
+                                Bundle bundle2 = new Bundle();
+                                bundle2.putString("TripId", upcomingData.get(position).getTripId());
+                                bundle2.putString("Name", upcomingData.get(position).getName());
+                                bundle2.putString("StartPoint", upcomingData.get(position).getStartPoint());
+                                bundle2.putString("EndPoint", upcomingData.get(position).getEndPoint());
+                                bundle2.putString("Date", upcomingData.get(position).getDate());
+                                bundle2.putString("Time", upcomingData.get(position).getTime());
+                                bundle2.putString("Repetition", upcomingData.get(position).getRepetition());
+                                bundle2.putString("TripType", upcomingData.get(position).getTripType());
                                 //todo sth wrong here
 //                                DetailsFragment detailsFragment=new DetailsFragment();
 //                                detailsFragment.setArguments(bundle2);
-                              //  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, detailsFragment).addToBackStack("").commit();
+                                //  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, detailsFragment).addToBackStack("").commit();
                                 break;
                             case R.id.edit_trip:
-                                myRef=FirebaseDatabase.getInstance().getReference().child("TripInfo").child(upcomingData.get(position).getTripId()).child("notes");
-                                Bundle bundle=new Bundle();
-                                bundle.putString("TripId",upcomingData.get(position).getTripId());
-                                bundle.putString("Name",upcomingData.get(position).getName());
-                                bundle.putString("StartPoint",upcomingData.get(position).getStartPoint());
-                                bundle.putString("EndPoint",upcomingData.get(position).getEndPoint());
-                                bundle.putString("Date",upcomingData.get(position).getDate());
-                                bundle.putString("Time",upcomingData.get(position).getTime());
-                                bundle.putString("Repetition",upcomingData.get(position).getRepetition());
-                                bundle.putString("TripType",upcomingData.get(position).getTripType());
-                                EditFragment editFragment=new EditFragment();
+                                myRef = FirebaseDatabase.getInstance().getReference().child("TripInfo").child(upcomingData.get(position).getTripId()).child("notes");
+                                Bundle bundle = new Bundle();
+                                bundle.putString("TripId", upcomingData.get(position).getTripId());
+                                bundle.putString("Name", upcomingData.get(position).getName());
+                                bundle.putString("StartPoint", upcomingData.get(position).getStartPoint());
+                                bundle.putString("EndPoint", upcomingData.get(position).getEndPoint());
+                                bundle.putString("Date", upcomingData.get(position).getDate());
+                                bundle.putString("Time", upcomingData.get(position).getTime());
+                                bundle.putString("Repetition", upcomingData.get(position).getRepetition());
+                                bundle.putString("TripType", upcomingData.get(position).getTripType());
+                                EditFragment editFragment = new EditFragment();
                                 editFragment.setArguments(bundle);
                                 ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, editFragment).addToBackStack("").commit();
                                 break;
@@ -277,8 +292,6 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
             tripMenu = itemView.findViewById(R.id.trip_menu);
             showNotes = itemView.findViewById(R.id.show_notes);
             startTrip = itemView.findViewById(R.id.start_trip);
-
-
 
 
         }

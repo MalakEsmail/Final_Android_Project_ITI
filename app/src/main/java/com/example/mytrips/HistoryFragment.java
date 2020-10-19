@@ -51,7 +51,7 @@ public class HistoryFragment extends Fragment {
                 if (snapshot.exists()) {
                     for (DataSnapshot data : snapshot.getChildren()) {
                         historyData = data.getValue(HistoryData.class);
-                        if ((historyData.getStatus()).equals("Done")) {
+                        if ((historyData.getStatus()).equals("Done")||(historyData.getStatus()).equals("Canceled")) {
                             listOfHistoryData.add(historyData);
 
                         }
