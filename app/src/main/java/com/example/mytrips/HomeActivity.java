@@ -76,6 +76,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_logout:
                 FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(this, MainActivity.class));
+                this.finish();
                 Toast.makeText(HomeActivity.this, "Logged Out successfully..", Toast.LENGTH_SHORT).show();
                 break;
         }
