@@ -138,4 +138,5 @@ public class HistoryData {
     public void setDateAndTimeInMillis(String dateAndTimeInMillis) {
         this.dateAndTimeInMillis = dateAndTimeInMillis;
     }
+
 }

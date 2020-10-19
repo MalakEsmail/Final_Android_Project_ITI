@@ -61,6 +61,16 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         holder.endTxtHistory.setText(historyData.get(position).getEndPoint());
         boolean isExpanded = historyData.get(position).isExpanded();
         holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+        holder. showHistoryNotes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String tripId = historyData.get(position).getTripId();
+                FragmentManager manager = ((AppCompatActivity) context).getSupportFragmentManager();
+                ShowNotesDialog showNotesDialog = new ShowNotesDialog(tripId);
+                showNotesDialog.show(manager, null);
+            }
+        });
+
         holder.cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -143,14 +153,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                     notifyDataSetChanged();
                 }
             });
-            showHistoryNotes.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //FragmentManager manager =((AppCompatActivity)context).getSupportFragmentManager();
-                    //ShowNotesDialog showNotesDialog = new ShowNotesDialog();
-                    //showNotesDialog.show(manager ,null);
-                }
-            });
+
 
         }
 
