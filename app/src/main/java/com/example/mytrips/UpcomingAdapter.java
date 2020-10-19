@@ -66,6 +66,8 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.upcoming_row, parent, false);
         displayNotes = new ArrayList<String>();
+        ref = FirebaseDatabase.getInstance().getReference().child("TripInfo");
+
         return new ViewHolder(view);
     }
 
@@ -123,7 +125,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
                 String startPoint = upcomingData.get(position).getStartPoint();
                 String endPoint = upcomingData.get(position).getEndPoint();
 
-                ref = FirebaseDatabase.getInstance().getReference().child("TripInfo");
+//                ref = FirebaseDatabase.getInstance().getReference().child("TripInfo");
 
                 HashMap<String, Object> hashMap = new HashMap<>();
                 hashMap.put("status", "Done");
@@ -204,7 +206,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
                                                 tripId = upcomingData.get(position).getTripId();
-                                                ref = FirebaseDatabase.getInstance().getReference().child("TripInfo");
+//                                                ref = FirebaseDatabase.getInstance().getReference().child("TripInfo");
                                                 ref.child(tripId).addListenerForSingleValueEvent(new ValueEventListener() {
                                                     @Override
                                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -249,8 +251,19 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
                                         .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
-                                                Toast.makeText(context, "cancel", Toast.LENGTH_LONG).show();
-                                            }
+//                                                ref = FirebaseDatabase.getInstance().getReference().child("TripInfo");
+
+                                                HashMap<String, Object> hashMap = new HashMap<>();
+                                                hashMap.put("status", "Canceled");
+                                                ref.child(upcomingData.get(position).getTripId()).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            Toast.makeText(context, "You Trip is Canceled ..", Toast.LENGTH_SHORT).show();
+
+                                                        }
+                                                    }
+                                                });                                            }
                                         })
                                         .setNegativeButton("NO", new DialogInterface.OnClickListener() {
                                             @Override

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.mytrips.reminder.ReminderBroadCast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -69,11 +70,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HistoryFragment()).commit();
                 break;
             case R.id.nav_sync:
-
-                 //Toast.makeText(HomeActivity.this, "Sync", Toast.LENGTH_SHORT).show();
+                finish();
+                startActivity(new Intent(this, HomeActivity.class));
+                Toast.makeText(HomeActivity.this, "Sync", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_logout:
-                Toast.makeText(HomeActivity.this, "Log Out", Toast.LENGTH_SHORT).show();
+                FirebaseAuth.getInstance().signOut();
+                Toast.makeText(HomeActivity.this, "Logged Out successfully..", Toast.LENGTH_SHORT).show();
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);
