@@ -154,48 +154,52 @@
                 app:layout_constraintVertical_bias="1.0"
                 android:layout_marginLeft="56dp" />
 
-            <Spinner
+            <TextView
                 android:id="@+id/repetitionSpinner"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="28dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/s"
-                android:entries="@array/repetitions"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="20dp"
                 android:padding="15dp"
+                android:textColor="@color/textColor"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/tripTypeSpinner"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tripTypeSpinner"
                 app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
-            <Spinner
+            <TextView
                 android:id="@+id/tripTypeSpinner"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/s"
-                android:entries="@array/tripType"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
                 android:padding="15dp"
+                android:textColor="@color/textColor"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView10"
                 app:layout_constraintTop_toBottomOf="@+id/repetitionSpinner" />
+
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="@string/tvNotes"
                 android:textColor="@color/textColor"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:text="@string/tvNotes"
                 app:layout_constraintBottom_toTopOf="@+id/notesList"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tripTypeSpinner"
-                app:layout_constraintVertical_bias="0.333"
-                android:layout_marginLeft="20dp" />
+                app:layout_constraintVertical_bias="0.333" />
 
 
             <LinearLayout
@@ -242,6 +246,40 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/btnSave"
                 app:layout_constraintTop_toBottomOf="@+id/notesList" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/tvRepeate"
+                android:textColor="@color/textColor"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/textView10"
+                app:layout_constraintEnd_toStartOf="@+id/repetitionSpinner"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/tvType"
+                android:textColor="@color/textColor"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/textView"
+                app:layout_constraintEnd_toStartOf="@+id/tripTypeSpinner"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -41,7 +41,7 @@ import java.util.Map;
 
 public class EditFragment extends Fragment {
     EditText etTripName,etStartPoint,etEndPoint;
-    Spinner repetitionSpinner,tripTypeSpinner;
+    TextView repetitionSpinner,tripTypeSpinner;
     Button btnSave,btnCancel;
     List<String> notesList;
     ArrayAdapter<String> arrayAdapter;
@@ -66,6 +66,8 @@ public class EditFragment extends Fragment {
         list=view.findViewById(R.id.list);
         btnSave=view.findViewById(R.id.btnSave);
         btnCancel=view.findViewById(R.id.btnCancel);
+        repetitionSpinner.setText(bundle.getString("Repetition"));
+        tripTypeSpinner.setText(bundle.getString("TripType"));
 
         final String id=bundle.getString("TripId");
         etTripName.setText(bundle.getString("Name"));
@@ -157,8 +159,8 @@ public class EditFragment extends Fragment {
                                 tripInfo.setEndPoint(etEndPoint.getText().toString().trim());
                                 tripInfo.setDate(tvDate.getText().toString().trim());
                                 tripInfo.setTime(tvTime.getText().toString().trim());
-                                tripInfo.setTripType(tripTypeSpinner.getSelectedItem().toString().trim());
-                                tripInfo.setRepetition(repetitionSpinner.getSelectedItem().toString().trim());
+                                tripInfo.setTripType(tripTypeSpinner.getText().toString().trim());
+                                tripInfo.setRepetition(repetitionSpinner.getText().toString().trim());
                                 tripInfo.setNotes(notesList);
                                 tripInfo.setStatus("Upcoming");
                                 tripInfo.setuId(uId);
@@ -200,5 +202,6 @@ public class EditFragment extends Fragment {
         });
         return view;
     }
+
 
 }

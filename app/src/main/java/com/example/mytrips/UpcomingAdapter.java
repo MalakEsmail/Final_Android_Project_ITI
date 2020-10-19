@@ -178,10 +178,9 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
                                 bundle2.putString("Time", upcomingData.get(position).getTime());
                                 bundle2.putString("Repetition", upcomingData.get(position).getRepetition());
                                 bundle2.putString("TripType", upcomingData.get(position).getTripType());
-                                //todo sth wrong here
-//                                DetailsFragment detailsFragment=new DetailsFragment();
-//                                detailsFragment.setArguments(bundle2);
-                                //  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, detailsFragment).addToBackStack("").commit();
+                                DetailsFragment detailsFragment=new DetailsFragment();
+                                detailsFragment.setArguments(bundle2);
+                                ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, detailsFragment).addToBackStack("").commit();
                                 break;
                             case R.id.edit_trip:
                                 myRef = FirebaseDatabase.getInstance().getReference().child("TripInfo").child(upcomingData.get(position).getTripId()).child("notes");
