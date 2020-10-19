@@ -92,7 +92,6 @@ public class EditFragment extends Fragment {
 
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 

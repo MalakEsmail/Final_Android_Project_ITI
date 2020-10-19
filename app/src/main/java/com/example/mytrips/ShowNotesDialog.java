@@ -69,7 +69,6 @@ public class ShowNotesDialog extends DialogFragment {
 
 
 
-
         return view;
     }
 }
