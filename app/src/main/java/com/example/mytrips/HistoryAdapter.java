@@ -18,13 +18,29 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder> {
-    HistoryData[] historyData;
+   // HistoryData[] historyData;
+   ArrayList<HistoryData> historyData;
+    DatabaseReference ref;
+    String tripId;
+
+
     Context context;
 
-    public HistoryAdapter(HistoryData[] historyData ,Context context) {
+    public HistoryAdapter(ArrayList<HistoryData> historyData, Context context) {
         this.historyData = historyData;
-        this.context=context;
+        this.context = context;
     }
 
     @NonNull
@@ -36,20 +52,68 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HistoryViewHolder holder, int position) {
-        holder.tripNameTxtHistory.setText(historyData[position].getTripNameHistory());
-        holder.stateTxtHistory.setText(historyData[position].getStateHistory());
-        holder.dateTxtHistory.setText(historyData[position].getDateHistory());
-        holder.timeTxtHistory.setText(historyData[position].getTimeHistory());
-        holder.startTxtHistory.setText(historyData[position].getStartPointHistory());
-        holder.endTxtHistory.setText(historyData[position].getEndPointHistory());
-        boolean isExpanded = historyData[position].isExpanded();
+    public void onBindViewHolder(@NonNull HistoryViewHolder holder, final int position) {
+        holder.tripNameTxtHistory.setText(historyData.get(position).getName());
+        holder.stateTxtHistory.setText(historyData.get(position).getStatus());
+        holder.dateTxtHistory.setText(historyData.get(position).getDate());
+        holder.timeTxtHistory.setText(historyData.get(position).getTime());
+        holder.startTxtHistory.setText(historyData.get(position).getStartPoint());
+        holder.endTxtHistory.setText(historyData.get(position).getEndPoint());
+        boolean isExpanded = historyData.get(position).isExpanded();
         holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+        holder.cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder cancelBuilder = new AlertDialog.Builder(view.getContext());
+                cancelBuilder.setMessage("Are you sure you want to Delete")
+                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                tripId = historyData.get(position).getTripId();
+                                ref = FirebaseDatabase.getInstance().getReference().child("TripInfo");
+                                ref.child(tripId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if (snapshot.exists()) {
+                                            ref.child(tripId).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        Toast.makeText(context, "Trip deleted successfully..", Toast.LENGTH_LONG).show();
+
+                                                    }
+
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(context, "Try again !!", Toast.LENGTH_LONG).show();
+
+                                                }
+                                            });
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        }).show();
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return historyData.length;
+        return historyData.size();
     }
 
     public class HistoryViewHolder extends RecyclerView.ViewHolder  {
@@ -74,7 +138,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
             linearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    HistoryData historyData1 = historyData[getAdapterPosition()];
+                    HistoryData historyData1 = historyData.get(getAdapterPosition());
                     historyData1.setExpanded(!historyData1.isExpanded());
                     notifyDataSetChanged();
                 }
@@ -87,25 +151,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                     //showNotesDialog.show(manager ,null);
                 }
             });
-            cancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View view) {
-                    AlertDialog.Builder cancelBuilder = new AlertDialog.Builder(view.getContext());
-                    cancelBuilder.setMessage("Are you sure you want to cancel")
-                            .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    Toast.makeText(view.getContext(), "cancel", Toast.LENGTH_LONG).show();
-                                }
-                            })
-                            .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
 
-                                }
-                            }).show();
-                }
-            });
         }
 
     }

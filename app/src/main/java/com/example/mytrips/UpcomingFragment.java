@@ -84,11 +84,6 @@ public class UpcomingFragment extends Fragment {
             }
         });
 
-//        //todo Reminder
-//        Intent intent = new Intent(context, ReminderBroadCast.class);
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-//        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-//        alarmManager.set(AlarmManager.RTC_WAKEUP, Long.valueOf(upcomingData.get(position).getDateAndTimeInMillis()), pendingIntent);
 
         return view;
     }

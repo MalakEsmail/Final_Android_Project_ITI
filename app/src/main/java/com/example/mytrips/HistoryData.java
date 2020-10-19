@@ -1,8 +1,11 @@
 package com.example.mytrips;
 
 public class HistoryData {
-    private String tripNameHistory,stateHistory,dateHistory,timeHistory,startPointHistory,endPointHistory;
+    private String name,startPoint,endPoint,time,date,tripType,repetition,status,uId,tripId,dateAndTimeInMillis;
     private boolean expanded;
+
+    public HistoryData() {
+    }
 
     public boolean isExpanded() {
         return expanded;
@@ -12,61 +15,127 @@ public class HistoryData {
         this.expanded = expanded;
     }
 
-    public String getTripNameHistory() {
-        return tripNameHistory;
+    public HistoryData(String name, String startPoint, String endPoint, String time, String date, String tripType, String repetition, String status, String uId,
+                       String tripId, String dateAndTimeInMillis) {
+        this.name = name;
+        this.startPoint = startPoint;
+        this.endPoint = endPoint;
+        this.time = time;
+        this.date = date;
+        this.tripType = tripType;
+        this.repetition = repetition;
+        this.status = status;
+        this.uId = uId;
+        this.tripId = tripId;
+        this.dateAndTimeInMillis = dateAndTimeInMillis;
+        this.expanded = false;
     }
 
-    public void setTripNameHistory(String tripNameHistory) {
-        this.tripNameHistory = tripNameHistory;
+    public HistoryData(String name, String startPoint, String endPoint, String time, String date, String status) {
+        this.name = name;
+        this.startPoint = startPoint;
+        this.endPoint = endPoint;
+        this.time = time;
+        this.date = date;
+        this.status = status;
+        this.expanded = false;
+
+    }
+    //    public HistoryData(String tripNameHistory, String stateHistory, String dateHistory, String timeHistory, String startPointHistory, String endPointHistory) {
+//        this.tripNameHistory = tripNameHistory;
+//        this.stateHistory = stateHistory;
+//        this.dateHistory = dateHistory;
+//        this.timeHistory = timeHistory;
+//        this.startPointHistory = startPointHistory;
+//        this.endPointHistory = endPointHistory;
+//        this.expanded=false;
+//    }
+
+    public String getName() {
+        return name;
     }
 
-    public String getStateHistory() {
-        return stateHistory;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setStateHistory(String stateHistory) {
-        this.stateHistory = stateHistory;
+    public String getStartPoint() {
+        return startPoint;
     }
 
-    public String getDateHistory() {
-        return dateHistory;
+    public void setStartPoint(String startPoint) {
+        this.startPoint = startPoint;
     }
 
-    public void setDateHistory(String dateHistory) {
-        this.dateHistory = dateHistory;
+    public String getEndPoint() {
+        return endPoint;
     }
 
-    public String getTimeHistory() {
-        return timeHistory;
+    public void setEndPoint(String endPoint) {
+        this.endPoint = endPoint;
     }
 
-    public void setTimeHistory(String timeHistory) {
-        this.timeHistory = timeHistory;
+    public String getTime() {
+        return time;
     }
 
-    public String getStartPointHistory() {
-        return startPointHistory;
+    public void setTime(String time) {
+        this.time = time;
     }
 
-    public void setStartPointHistory(String startPointHistory) {
-        this.startPointHistory = startPointHistory;
+    public String getDate() {
+        return date;
     }
 
-    public String getEndPointHistory() {
-        return endPointHistory;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public void setEndPointHistory(String endPointHistory) {
-        this.endPointHistory = endPointHistory;
+    public String getTripType() {
+        return tripType;
     }
 
-    public HistoryData(String tripNameHistory, String stateHistory, String dateHistory, String timeHistory, String startPointHistory, String endPointHistory) {
-        this.tripNameHistory = tripNameHistory;
-        this.stateHistory = stateHistory;
-        this.dateHistory = dateHistory;
-        this.timeHistory = timeHistory;
-        this.startPointHistory = startPointHistory;
-        this.endPointHistory = endPointHistory;
-        this.expanded=false;
+    public void setTripType(String tripType) {
+        this.tripType = tripType;
+    }
+
+    public String getRepetition() {
+        return repetition;
+    }
+
+    public void setRepetition(String repetition) {
+        this.repetition = repetition;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getuId() {
+        return uId;
+    }
+
+    public void setuId(String uId) {
+        this.uId = uId;
+    }
+
+    public String getTripId() {
+        return tripId;
+    }
+
+    public void setTripId(String tripId) {
+        this.tripId = tripId;
+    }
+
+    public String getDateAndTimeInMillis() {
+        return dateAndTimeInMillis;
+    }
+
+    public void setDateAndTimeInMillis(String dateAndTimeInMillis) {
+        this.dateAndTimeInMillis = dateAndTimeInMillis;
     }
 }

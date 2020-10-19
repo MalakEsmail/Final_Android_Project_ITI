@@ -27,6 +27,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.mytrips.reminder.ReminderBroadCast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -41,6 +43,8 @@ import java.util.ArrayList;
 
 import java.util.HashMap;
 import java.util.List;
+
+import static android.content.Context.ALARM_SERVICE;
 
 public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHolder> {
     // UpcomingData[] upcomingData;
@@ -68,6 +72,19 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+
+        //  if (upcomingData.get(position).getDateAndTimeInMillis() == String.valueOf(System.currentTimeMillis())) {
+
+        Intent intent = new Intent(context, ReminderBroadCast.class);
+       // intent.putExtra("start", upcomingData.get(0).getStartPoint());
+        Toast.makeText(context, ""+upcomingData.get(position).getDateAndTimeInMillis(), Toast.LENGTH_SHORT).show();
+
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, Long.valueOf(upcomingData.get(position).getDateAndTimeInMillis()), pendingIntent);
+
+        //}
         holder.dateTxt.setText(upcomingData.get(position).getDate());
         holder.timeTxt.setText(upcomingData.get(position).getTime());
         holder.tripNameTxt.setText(upcomingData.get(position).getName());
@@ -98,8 +115,8 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
                 ref.child(startTripId).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                          Toast.makeText(context, "You Started your Trip", Toast.LENGTH_SHORT).show();
+                        if (task.isSuccessful()) {
+                            Toast.makeText(context, "You Started your Trip", Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -144,9 +161,10 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
                                 bundle2.putString("Time",upcomingData.get(position).getTime());
                                 bundle2.putString("Repetition",upcomingData.get(position).getRepetition());
                                 bundle2.putString("TripType",upcomingData.get(position).getTripType());
-                                DetailsFragment detailsFragment=new DetailsFragment();
-                                detailsFragment.setArguments(bundle2);
-                                ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, detailsFragment).addToBackStack("").commit();
+                                //todo sth wrong here
+//                                DetailsFragment detailsFragment=new DetailsFragment();
+//                                detailsFragment.setArguments(bundle2);
+                              //  ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, detailsFragment).addToBackStack("").commit();
                                 break;
                             case R.id.edit_trip:
                                 myRef=FirebaseDatabase.getInstance().getReference().child("TripInfo").child(upcomingData.get(position).getTripId()).child("notes");
@@ -170,36 +188,36 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
                                         .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
-                                    tripId = upcomingData.get(position).getTripId();
-                                    ref = FirebaseDatabase.getInstance().getReference().child("TripInfo");
-                                    ref.child(tripId).addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            if (snapshot.exists()) {
-                                                ref.child(tripId).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                tripId = upcomingData.get(position).getTripId();
+                                                ref = FirebaseDatabase.getInstance().getReference().child("TripInfo");
+                                                ref.child(tripId).addListenerForSingleValueEvent(new ValueEventListener() {
                                                     @Override
-                                                    public void onComplete(@NonNull Task<Void> task) {
-                                                        if (task.isSuccessful()) {
-                                                            Toast.makeText(context, "Trip deleted successfully..", Toast.LENGTH_LONG).show();
+                                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                        if (snapshot.exists()) {
+                                                            ref.child(tripId).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                    if (task.isSuccessful()) {
+                                                                        Toast.makeText(context, "Trip deleted successfully..", Toast.LENGTH_LONG).show();
 
+                                                                    }
+
+                                                                }
+                                                            }).addOnFailureListener(new OnFailureListener() {
+                                                                @Override
+                                                                public void onFailure(@NonNull Exception e) {
+                                                                    Toast.makeText(context, "Try again !!", Toast.LENGTH_LONG).show();
+
+                                                                }
+                                                            });
                                                         }
-
                                                     }
-                                                }).addOnFailureListener(new OnFailureListener() {
+
                                                     @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        Toast.makeText(context, "Try again !!", Toast.LENGTH_LONG).show();
+                                                    public void onCancelled(@NonNull DatabaseError error) {
 
                                                     }
                                                 });
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                        }
-                                    });
 
                                             }
                                         })
